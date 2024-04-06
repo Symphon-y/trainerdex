@@ -1,0 +1,30 @@
+{
+  "name": "trainerdex",
+  "version": "1.0.0",
+  "description": "TrainérDex is a Discord bot Pokémon Go, designed to store and retrieve trainer IDs and metadata. It allows members to create profiles, search for fellow trainers, and facilitates event organization and trading within the community. Secure and user-friendly, it's the ultimate tool for enhancing club engagement and connectivity.",
+  "main": "index.js",
+  "dependencies": {
+    "discord-interactions": "^3.4.0",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "node-fetch": "^3.3.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Symphon-y/trainerdex.git"
+  },
+  "keywords": [
+    "pokemon",
+    "pokemongo"
+  ],
+  "author": "Travis Redden",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Symphon-y/trainerdex/issues"
+  },
+  "homepage": "https://github.com/Symphon-y/trainerdex#readme"
+}
