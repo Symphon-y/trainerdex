@@ -1,0 +1,32 @@
+version: '3.8'
+services:
+  app:
+    container_name: trainerdex_app
+    build: ./app
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./app:/usr/src/app
+    environment:
+      - NODE_ENV=${NODE_ENV}
+      - DB_HOST=db
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
+    depends_on:
+      - db
+    restart: unless-stopped
+
+  db:
+    container_name: trainerdex_db
+    image: postgres:latest
+    volumes:
+      - trainerdex_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+    restart: unless-stopped
+
+volumes:
+  trainerdex_data:
