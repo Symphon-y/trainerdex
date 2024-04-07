@@ -23,11 +23,9 @@ const client = new Client({
       GatewayIntentBits.Guilds,
       GatewayIntentBits.GuildMessages,
       GatewayIntentBits.DirectMessages,
-      GatewayIntentBits.MessageContent, // Include if you need access to message content
-      // Add any other intents your bot needs here
+      GatewayIntentBits.MessageContent,
   ],
   partials: [
-      // If you're using message content intent, you might also need these partials
       'MESSAGE', 'CHANNEL', 'REACTION'
   ]
 });
