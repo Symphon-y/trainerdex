@@ -75,7 +75,15 @@ app.post('/interactions', async function (req, res) {
           },
         });
         break;
-      case '':
+      case 'register':
+        console.log({type, id, data, options: data.options})
+        return res.send({
+          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          data: {
+            // Fetches a random emoji to send from a helper function
+            content: 'Registration complete, Trainer. You may retrieve your trainer code at anytime by typing /getTrainerCode' + getRandomEmoji(),
+          },
+        })
         break;
       default:
         return 'invalid input'
