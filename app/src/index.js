@@ -15,7 +15,7 @@ const app = express();
 // Get port, or default to 3000
 const PORT = process.env.PORT || 3000;
 // Parse request body and verifies incoming requests using discord-interactions package
-app.use(express.json({ verify: VerifyDiscordRequest(process.env.PUBLIC_KEY) }));
+app.use(express.json({ verify: VerifyDiscordRequest(process.env.DISCORD_PUBLIC_KEY) }));
 
 // Create a new client instance with more intents
 const client = new Client({
@@ -39,6 +39,7 @@ client.once('ready', () => {
 client.login(process.env.DISCORD_TOKEN);
 
 console.log({
+  environment: process.env.NODE_ENV,
   token: process.env.DISCORD_TOKEN,
   application_id: process.env.DISCORD_APPLICATION_ID,
   public_key: process.env.DISCORD_PUBLIC_KEY,
@@ -50,6 +51,7 @@ console.log({
  */
 app.post('/interactions', async function (req, res) {
   // Interaction type and data
+  console.log('***** Interactions endpoint reached *****')
   const { type, id, data } = req.body;
 
   /**
