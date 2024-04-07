@@ -7,7 +7,7 @@ import {
   MessageComponentTypes,
   ButtonStyleTypes,
 } from 'discord-interactions';
-import { VerifyDiscordRequest, getRandomEmoji, DiscordRequest } from './utils';
+import { VerifyDiscordRequest, getRandomEmoji, DiscordRequest } from './utils/index.js';
 import { Client, GatewayIntentBits } from 'discord.js';
 
 // Create an express app

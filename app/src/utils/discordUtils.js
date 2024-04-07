@@ -15,7 +15,7 @@ export function VerifyDiscordRequest(clientKey) {
   };
 }
 
-export async function DiscordRequest(endpoint, options) {
+export const DiscordRequest = async(endpoint, options) => {
   // append endpoint to root API URL
   const url = 'https://discord.com/api/v10/' + endpoint;
   // Stringify payloads
@@ -39,7 +39,7 @@ export async function DiscordRequest(endpoint, options) {
   return res;
 }
 
-export async function InstallGlobalCommands(appId, commands) {
+export const InstallGlobalCommands = async(appId, commands) => {
   // API endpoint to overwrite global commands
   const endpoint = `applications/${appId}/commands`;
 
