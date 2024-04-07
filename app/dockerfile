@@ -14,10 +14,10 @@ RUN npm install
 COPY . .
 
 # Expose the port the app runs on
-EXPOSE 3000
+EXPOSE "${PORT}"
 
 # Define environment variable for Node.js
-ENV NODE_ENV=production
+ENV NODE_ENV="${NODE_ENV}"
 
 # Command to run the app
-CMD ["node", "app.js"]
+CMD ["npm", "run", "dev"]

@@ -6,7 +6,12 @@ services:
     ports:
       - "${PORT}:${PORT}"
     volumes:
-      - ./app:/usr/src/app
+      # Mount the .env file specifically
+      - ./.env:/usr/src/app/.env
+      # Uncomment the next line if you decide to use volumes for live code reloading in development
+      - ./app/src:/usr/src/app/src
+      # Exclude the node_modules directory to avoid overwriting the container's version
+      # - /usr/src/app/node_modules
     environment:
       - NODE_ENV=${NODE_ENV}
       - DB_HOST=db
@@ -27,6 +32,18 @@ services:
       - POSTGRES_USER=${DB_USER}
       - POSTGRES_PASSWORD=${DB_PASSWORD}
       - POSTGRES_DB=${DB_NAME}
+    restart: unless-stopped
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./certbot/conf:/etc/letsencrypt
+    depends_on:
+      - app
     restart: unless-stopped
 
 volumes:
