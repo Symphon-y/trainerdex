@@ -6,7 +6,12 @@ services:
     ports:
       - "${PORT}:${PORT}"
     volumes:
-      - ./app:/usr/src/app
+      # Mount the .env file specifically
+      - ./.env:/usr/src/app/.env
+      # Uncomment the next line if you decide to use volumes for live code reloading in development
+      # - ./app:/usr/src/app
+      # Exclude the node_modules directory to avoid overwriting the container's version
+      # - /usr/src/app/node_modules
     environment:
       - NODE_ENV=${NODE_ENV}
       - DB_HOST=db

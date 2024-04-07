@@ -8,16 +8,16 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 
 # Install app dependencies
-RUN npm install
+RUN npm install --verbose
 
 # Bundle app source inside the Docker image
 COPY . .
 
 # Expose the port the app runs on
-EXPOSE 3000
+EXPOSE "${PORT}"
 
 # Define environment variable for Node.js
 ENV NODE_ENV=production
 
 # Command to run the app
-CMD ["node", "app.js"]
+CMD ["node", "index.js"]
