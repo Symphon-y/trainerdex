@@ -7,7 +7,11 @@ import {
   MessageComponentTypes,
   ButtonStyleTypes,
 } from 'discord-interactions';
-import { VerifyDiscordRequest, getRandomEmoji, DiscordRequest } from './utils/index.js';
+import {
+  VerifyDiscordRequest,
+  getRandomEmoji,
+  DiscordRequest,
+} from './utils/index.js';
 import { Client, GatewayIntentBits } from 'discord.js';
 
 // Create an express app
@@ -15,23 +19,23 @@ const app = express();
 // Get port, or default to 3000
 const PORT = process.env.PORT || 3000;
 // Parse request body and verifies incoming requests using discord-interactions package
-app.use(express.json({ verify: VerifyDiscordRequest(process.env.DISCORD_PUBLIC_KEY) }));
+app.use(
+  express.json({ verify: VerifyDiscordRequest(process.env.DISCORD_PUBLIC_KEY) })
+);
 
 // Create a new client instance with more intents
 const client = new Client({
   intents: [
-      GatewayIntentBits.Guilds,
-      GatewayIntentBits.GuildMessages,
-      GatewayIntentBits.DirectMessages,
-      GatewayIntentBits.MessageContent,
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.DirectMessages,
+    GatewayIntentBits.MessageContent,
   ],
-  partials: [
-      'MESSAGE', 'CHANNEL', 'REACTION'
-  ]
+  partials: ['MESSAGE', 'CHANNEL', 'REACTION'],
 });
 
 client.once('ready', () => {
-    console.log('Discord bot is online!');
+  console.log('Discord bot is online!');
 });
 
 client.login(process.env.DISCORD_TOKEN);
@@ -41,15 +45,15 @@ console.log({
   token: process.env.DISCORD_TOKEN,
   application_id: process.env.DISCORD_APPLICATION_ID,
   public_key: process.env.DISCORD_PUBLIC_KEY,
-  port: process.env.PORT
-})
+  port: process.env.PORT,
+});
 
 /**
  * Interactions endpoint URL where Discord will send HTTP requests
  */
 app.post('/interactions', async function (req, res) {
   // Interaction type and data
-  console.log('***** Interactions endpoint reached *****')
+  console.log('***** Interactions endpoint reached *****');
   const { type, id, data } = req.body;
 
   /**
@@ -65,28 +69,30 @@ app.post('/interactions', async function (req, res) {
    */
   if (type === InteractionType.APPLICATION_COMMAND) {
     const { name } = data;
-    switch(name) {
+    switch (name) {
       case 'test':
         return res.send({
           type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
           data: {
             // Fetches a random emoji to send from a helper function
-            content: 'hello world ' + getRandomEmoji(),
+            content: 'hello big boi ' + getRandomEmoji(),
           },
         });
         break;
       case 'register':
-        console.log({type, id, data, options: data.options})
+        console.log({ type, id, data, options: data.options });
         return res.send({
           type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
           data: {
             // Fetches a random emoji to send from a helper function
-            content: 'Registration complete, Trainer. You may retrieve your trainer code at anytime by typing /getTrainerCode' + getRandomEmoji(),
+            content:
+              'Registration complete, Trainer. You may retrieve your trainer code at anytime by typing /getTrainerCode' +
+              getRandomEmoji(),
           },
-        })
+        });
         break;
       default:
-        return 'invalid input'
+        return 'invalid input';
     }
   }
 });

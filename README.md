@@ -1,4 +1,3 @@
-
 # TrainérDex Discord Bot
 
 TrainérDex is a Discord bot designed for Pokémon go. It enables users to store, retrieve, and manage trainer IDs and other related metadata within a Discord server, enhancing the community's connectivity and engagement.
@@ -35,7 +34,6 @@ To get started with TrainérDex, follow these steps:
 
 3. **Set up your `.env` file** with the necessary Discord bot token and database credentials: **[an example can be found in .env.example]**
 
-
 4. **Run the bot**:
 
    ```bash
@@ -44,45 +42,31 @@ To get started with TrainérDex, follow these steps:
 
 ## Docker Setup
 
-TrainérDex can also be run inside a Docker container, which simplifies the setup and ensures consistent running conditions regardless of the host environment.
-
-### Building the Docker Image
-
-1. Navigate to the project directory where the `Dockerfile` is located.
-
-2. Build the Docker image with the following command:
-
-   ```bash
-   docker build -t trainerdex .
-   ```
-
-   This command builds a Docker image named `trainerdex` based on the instructions in your `Dockerfile`.
-
-### Running the Bot in a Docker Container
-
-After building the image, you can run TrainérDex in a Docker container:
+To start the development environment using `docker-compose`, run:
 
 ```bash
-docker run --name trainerdex_bot -d trainerdex
+docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d
 ```
 
-This command runs the `trainerdex` image in a detached mode (`-d`) with the container name `trainerdex_bot`.
+This command starts all services defined in the `docker-compose.yml` file and `docker-compose.dev.yml` file in detached mode.
 
-### Using docker-compose
+To start the production environment using `docker-compose`, run:
 
-To start the bot using `docker-compose`, run:
+For the development environment, ngrok is utilized to create a temporary HTTPS endpoint for TrainerDex, facilitating rapid testing and iteration without the need for permanent infrastructure changes. This approach allows developers to expose their local development server to the internet securely and conveniently.
 
 ```bash
-docker-compose up -d
+docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
 ```
 
-This command starts all services defined in your `docker-compose.yml` file in detached mode.
+This command starts all services defined in the `docker-compose.yml` file and `docker-compose.prod.yml` file in detached mode.
+
+The production environment leverages nginx as a reverse proxy, with LetsEncrypt providing SSL certification. This setup ensures a stable and secure HTTPS endpoint for TrainerDex, suitable for long-term deployment and public access. This distinction ensures that while development remains flexible and accessible, the production setup is optimized for security and performance.
 
 ## Updating the Bot
 
 To update your bot running in a Docker container, you'll need to rebuild the Docker image and restart the container. This can be done by repeating the build and run steps, or by using docker-compose commands if applicable.
 
--------
+---
 
 ## Usage
 

@@ -15,7 +15,7 @@ export function VerifyDiscordRequest(clientKey) {
   };
 }
 
-export const DiscordRequest = async(endpoint, options) => {
+export const DiscordRequest = async (endpoint, options) => {
   // append endpoint to root API URL
   const url = 'https://discord.com/api/v10/' + endpoint;
   // Stringify payloads
@@ -25,9 +25,10 @@ export const DiscordRequest = async(endpoint, options) => {
     headers: {
       Authorization: `Bot ${process.env.DISCORD_TOKEN}`,
       'Content-Type': 'application/json; charset=UTF-8',
-      'User-Agent': 'DiscordBot (https://github.com/discord/discord-example-app, 1.0.0)',
+      'User-Agent':
+        'DiscordBot (https://github.com/discord/discord-example-app, 1.0.0)',
     },
-    ...options
+    ...options,
   });
   // throw API errors
   if (!res.ok) {
@@ -37,9 +38,9 @@ export const DiscordRequest = async(endpoint, options) => {
   }
   // return original response
   return res;
-}
+};
 
-export const InstallGlobalCommands = async(appId, commands) => {
+export const InstallGlobalCommands = async (appId, commands) => {
   // API endpoint to overwrite global commands
   const endpoint = `applications/${appId}/commands`;
   try {
@@ -48,4 +49,4 @@ export const InstallGlobalCommands = async(appId, commands) => {
   } catch (err) {
     console.error(err);
   }
-}
+};
