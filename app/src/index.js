@@ -7,7 +7,7 @@ import {
   MessageComponentTypes,
   ButtonStyleTypes,
 } from 'discord-interactions';
-import { VerifyDiscordRequest, getRandomEmoji, DiscordRequest } from './utils.js';
+import { VerifyDiscordRequest, getRandomEmoji, DiscordRequest } from './utils/index.js';
 import { Client, GatewayIntentBits } from 'discord.js';
 
 // Create an express app
@@ -23,11 +23,9 @@ const client = new Client({
       GatewayIntentBits.Guilds,
       GatewayIntentBits.GuildMessages,
       GatewayIntentBits.DirectMessages,
-      GatewayIntentBits.MessageContent, // Include if you need access to message content
-      // Add any other intents your bot needs here
+      GatewayIntentBits.MessageContent,
   ],
   partials: [
-      // If you're using message content intent, you might also need these partials
       'MESSAGE', 'CHANNEL', 'REACTION'
   ]
 });
@@ -67,17 +65,28 @@ app.post('/interactions', async function (req, res) {
    */
   if (type === InteractionType.APPLICATION_COMMAND) {
     const { name } = data;
-
-    // "test" command
-    if (name === 'test') {
-      // Send a message into the channel where command was triggered from
-      return res.send({
-        type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-        data: {
-          // Fetches a random emoji to send from a helper function
-          content: 'hello world ' + getRandomEmoji(),
-        },
-      });
+    switch(name) {
+      case 'test':
+        return res.send({
+          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          data: {
+            // Fetches a random emoji to send from a helper function
+            content: 'hello world ' + getRandomEmoji(),
+          },
+        });
+        break;
+      case 'register':
+        console.log({type, id, data, options: data.options})
+        return res.send({
+          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          data: {
+            // Fetches a random emoji to send from a helper function
+            content: 'Registration complete, Trainer. You may retrieve your trainer code at anytime by typing /getTrainerCode' + getRandomEmoji(),
+          },
+        })
+        break;
+      default:
+        return 'invalid input'
     }
   }
 });
