@@ -1,0 +1,7 @@
+authtoken: YOUR_NGROK_AUTHTOKEN
+region: us  # Choose from us, eu, ap, au, sa, jp, in based on your location for best performance
+
+tunnels:
+  discord-bot:
+    addr: 3000  # The port your Discord bot is running on locally; defaults to 3000
+    proto: http

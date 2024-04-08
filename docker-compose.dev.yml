@@ -1,0 +1,18 @@
+version: '3.8'
+services:
+  ngrok:
+    image: ngrok/ngrok:latest
+    restart: unless-stopped
+    command:
+      - http
+      - app:${PORT}
+      - --region=us
+      - --authtoken=${NGROK_AUTHTOKEN}
+      - --config
+      - /etc/ngrok/ngrok.yml
+    volumes:
+      - ./ngrok.yml:/etc/ngrok/ngrok.yml
+    ports:
+      - "${NGROK_HOST_PORT}:${NGROK_CONTAINER_PORT}"
+    depends_on:
+      - app
