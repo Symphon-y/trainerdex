@@ -1,3 +1,5 @@
+<img src="https://i.imgur.com/ybG6sMx.png" />
+
 # TrainérDex Discord Bot
 
 TrainérDex is a Discord bot designed for Pokémon go. It enables users to store, retrieve, and manage trainer IDs and other related metadata within a Discord server, enhancing the community's connectivity and engagement.
