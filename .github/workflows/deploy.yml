@@ -26,5 +26,4 @@ jobs:
             docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
             # Wait for the container to fully start up
             sleep 10
-            # and 'your_container_command' with the command you want to run inside your container
             docker exec trainerdex_app npm run register
