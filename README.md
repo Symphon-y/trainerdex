@@ -50,9 +50,9 @@ docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d
 
 This command starts all services defined in the `docker-compose.yml` file and `docker-compose.dev.yml` file in detached mode.
 
-To start the production environment using `docker-compose`, run:
-
 For the development environment, ngrok is utilized to create a temporary HTTPS endpoint for TrainerDex, facilitating rapid testing and iteration without the need for permanent infrastructure changes. This approach allows developers to expose their local development server to the internet securely and conveniently.
+
+To start the production environment using `docker-compose`, run:
 
 ```bash
 docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
