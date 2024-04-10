@@ -1,17 +1,7 @@
 import 'dotenv/config';
 import express from 'express';
-import {
-  InteractionType,
-  InteractionResponseType,
-  InteractionResponseFlags,
-  MessageComponentTypes,
-  ButtonStyleTypes,
-} from 'discord-interactions';
-import {
-  VerifyDiscordRequest,
-  getRandomEmoji,
-  DiscordRequest,
-} from './utils/index.js';
+import { InteractionType, InteractionResponseType } from 'discord-interactions';
+import { VerifyDiscordRequest, getRandomEmoji } from './utils/index.js';
 import { Client, GatewayIntentBits } from 'discord.js';
 
 // Create an express app
@@ -39,14 +29,6 @@ client.once('ready', () => {
 });
 
 client.login(process.env.DISCORD_TOKEN);
-
-console.log({
-  environment: process.env.NODE_ENV,
-  token: process.env.DISCORD_TOKEN,
-  application_id: process.env.DISCORD_APPLICATION_ID,
-  public_key: process.env.DISCORD_PUBLIC_KEY,
-  port: process.env.PORT,
-});
 
 /**
  * Interactions endpoint URL where Discord will send HTTP requests
@@ -79,22 +61,90 @@ app.post('/interactions', async function (req, res) {
               'hello, testing to see if gitworkflow worked ' + getRandomEmoji(),
           },
         });
-        break;
       case 'register':
-        console.log({ type, id, data, options: data.options });
         return res.send({
-          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          type: InteractionResponseType.MODAL,
           data: {
-            // Fetches a random emoji to send from a helper function
-            content:
-              'Registration complete, Trainer. You may retrieve your trainer code at anytime by typing /getTrainerCode' +
-              getRandomEmoji(),
+            title: 'Register Trainer Code',
+            custom_id: 'register-trainer-code',
+            components: [
+              {
+                type: 1,
+                components: [
+                  {
+                    type: 4,
+                    custom_id: 'trainer-code',
+                    label: 'Trainer Code',
+                    style: 1,
+                    min_length: 12,
+                    max_length: 14,
+                    placeholder: '0879 2118 9758',
+                    required: true,
+                  },
+                ],
+              },
+              {
+                type: 1,
+                components: [
+                  {
+                    type: 4,
+                    custom_id: 'discord-user-name',
+                    label: 'Discord User Name',
+                    style: 1,
+                    min_length: 1,
+                    max_length: 24,
+                    placeholder: 'MySuperCoolUserName',
+                    required: true,
+                  },
+                ],
+              },
+              {
+                type: 1,
+                components: [
+                  {
+                    type: 4,
+                    custom_id: 'po-go-user-name',
+                    label: 'Pokemon Go User Name (optional)',
+                    style: 1,
+                    min_length: 1,
+                    max_length: 24,
+                    placeholder: 'PogoUserName',
+                    required: false,
+                  },
+                ],
+              },
+            ],
           },
         });
-        break;
       default:
         return 'invalid input';
     }
+  } else if (type === InteractionType.MODAL_SUBMIT) {
+    console.log({ type, id, data });
+    // {
+    //   type: 5,
+    //   id: '1227569381643649068',
+    //   data: {
+    //     components: [ [Object], [Object], [Object] ],
+    //     custom_id: 'register-trainer-code'
+    //   }
+    // }
+    console.log(data.components[0].components);
+    // [ { custom_id: 'trainer-code', type: 4, value: '123412341233' } ]
+    console.log(data.components[1].components);
+    // [ { custom_id: 'discord-user-name', type: 4, value: 'asdfasdf' } ]
+    console.log(data.components[2].components);
+    // [ { custom_id: 'po-go-user-name', type: 4, value: 'hellopogofan' } ]
+
+    res.send({
+      type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+      data: {
+        // Fetches a random emoji to send from a helper function
+        content:
+          'Congratulations Trainer, you have successfully registered ' +
+          getRandomEmoji(),
+      },
+    });
   }
 });
 
