@@ -1,0 +1,2 @@
+ALTER TABLE users
+ADD COLUMN server_name VARCHAR(255);

@@ -10,11 +10,12 @@ services:
       - ./.env:/usr/src/app/.env
       # Uncomment the next line if you decide to use volumes for live code reloading in development
       - ./app/src:/usr/src/app/src
+      - ./app/db:/usr/src/app/db
       # Exclude the node_modules directory to avoid overwriting the container's version
       # - /usr/src/app/node_modules
     environment:
       - NODE_ENV=${NODE_ENV}
-      - DB_HOST=db
+      - DB_HOST=${DB_HOST}
       - DB_USER=${DB_USER}
       - DB_PASSWORD=${DB_PASSWORD}
       - DB_NAME=${DB_NAME}
@@ -32,6 +33,7 @@ services:
       - POSTGRES_USER=${DB_USER}
       - POSTGRES_PASSWORD=${DB_PASSWORD}
       - POSTGRES_DB=${DB_NAME}
+      - PORT=${DB_PORT}
     restart: unless-stopped
 
 volumes:
