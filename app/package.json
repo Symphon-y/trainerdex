@@ -9,8 +9,9 @@
     "register": "node src/commands/index.js",
     "dev": "nodemon src/index.js",
     "test": "test",
-    "get-endpoint": "curl http://localhost:4040/api/tunnels | jq -r '.tunnels[] | select(.proto == \"https\") | .public_url'"
-
+    "get-endpoint": "curl http://localhost:4040/api/tunnels | jq -r '.tunnels[] | select(.proto == \"https\") | .public_url'",
+    "create-tables": "node db/utils/createTables.js",
+    "migrate-database": "node db/utils/migrateDatabase.js"
   },
   "repository": {
     "type": "git",
@@ -27,7 +28,9 @@
     "discord.js": "^14.14.1",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
-    "node-fetch": "^3.3.2"
+    "node-fetch": "^3.3.2",
+    "pg": "^8.11.5",
+    "pg-hstore": "^2.3.4"
   },
   "devDependencies": {
     "nodemon": "^2.0.15"

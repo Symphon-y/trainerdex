@@ -19,5 +19,11 @@ EXPOSE "${PORT}"
 # Define environment variable for Node.js
 ENV NODE_ENV="${NODE_ENV}"
 
-# Command to run the app
-CMD ["npm", "run", "dev"]
+# Run database migrations and start the app
+CMD ["sh", "-c", "\
+  if [ \"$NODE_ENV\" = \"production\" ]; \
+  then \
+  npm run create-tables && npm run migrate-database && npm run register && npm start; \
+  else \
+  npm run create-tables && npm run migrate-database && npm run register && npm run dev; \
+  fi"]
